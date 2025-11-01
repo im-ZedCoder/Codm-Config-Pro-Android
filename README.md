@@ -79,7 +79,7 @@ This configuration pack is designed to optimize Call of Duty: Mobile for maximum
 
 ## 🔧 Installation Guide
 
-### Method 1: Using File Manager
+### Method 1: Manual Installation
 
 1. **Copy Configuration Files**
    - Copy the `Config` folder
@@ -90,12 +90,32 @@ This configuration pack is designed to optimize Call of Duty: Mobile for maximum
    ```
 
 3. **Paste Configuration Files**
-   - Copy the content of the `Config` folder to the above path
+   
+   **⚠️ Important:** Files must be copied to **TWO locations:**
+   
+   **Location 1 - Root:**
+   ```
+   Android/data/com.activision.callofduty.shooter/files/
+   ```
+   
+   **Location 2 - Config Folder:**
+   ```
+   Android/data/com.activision.callofduty.shooter/files/Config/
+   ```
+   
+   - Copy the contents of the `Config` folder to both locations above
 
 4. **Set Permissions**
    - Allow File Manager to edit system files
 
-### Method 2: Using Installer Scripts
+### Method 2: Using Installer Scripts (Recommended)
+
+**For easy and automatic installation, use the installer scripts:**
+
+- **install.bat** - Windows Batch installer
+- **install.ps1** - PowerShell installer (advanced)
+
+These scripts automatically copy files to both required locations!
 
 #### Windows Batch (install.bat)
 ```bash
@@ -116,9 +136,14 @@ Set-ExecutionPolicy Bypass -Scope Process
 # Connect Android device to computer
 adb connect [YOUR_DEVICE_IP]
 
-# Push configuration files
+# Copy config files - Root location
 adb push Config/graphics_settings.cfg /storage/emulated/0/Android/data/com.activision.callofduty.shooter/files/
 adb push Config/hyper_performance.cfg /storage/emulated/0/Android/data/com.activision.callofduty.shooter/files/
+
+# Copy config files - Config location
+adb shell mkdir -p /storage/emulated/0/Android/data/com.activision.callofduty.shooter/files/Config
+adb push Config/graphics_settings.cfg /storage/emulated/0/Android/data/com.activision.callofduty.shooter/files/Config/
+adb push Config/hyper_performance.cfg /storage/emulated/0/Android/data/com.activision.callofduty.shooter/files/Config/
 ```
 
 ---
@@ -200,7 +225,7 @@ adb push Config/hyper_performance.cfg /storage/emulated/0/Android/data/com.activ
 
 ### Issue: Config not working
 ✅ Check File Manager permissions
-✅ Verify file paths
+✅ Verify file paths (both locations)
 ✅ Restart the game
 
 ### Issue: Increased lag
