@@ -93,7 +93,10 @@ else {
 # Step 3: Copy files
 Write-Host ""
 Write-Host "[3/4] در حال کپی فایل‌ها..." -ForegroundColor Yellow
+Write-Host ""
 
+# Copy to Root Directory
+Write-Host "📍 مسیر 1: Root Directory" -ForegroundColor Cyan
 if (-not (Test-Path $targetPath)) {
     try {
         New-Item -ItemType Directory -Path $targetPath -Force | Out-Null
@@ -110,14 +113,45 @@ foreach ($file in $configFiles) {
     try {
         $fileName = Split-Path $file -Leaf
         Copy-Item -Path $file -Destination $targetPath -Force
-        Write-Host "✅ $fileName کپی شد" -ForegroundColor Green
+        Write-Host "✅ $fileName کپی شد (Root)" -ForegroundColor Green
     }
     catch {
-        Write-Host "❌ خطا در کپی $fileName : $_" -ForegroundColor Red
+        Write-Host "❌ خطا در کپی $fileName به مسیر اصلی: $_" -ForegroundColor Red
         Read-Host "Press Enter to exit"
         exit 1
     }
 }
+
+# Copy to Config Directory
+Write-Host ""
+Write-Host "📍 مسیر 2: Config Directory" -ForegroundColor Cyan
+$configDirPath = Join-Path $targetPath "Config"
+
+if (-not (Test-Path $configDirPath)) {
+    try {
+        New-Item -ItemType Directory -Path $configDirPath -Force | Out-Null
+        Write-Host "✅ پوشه Config ایجاد شد" -ForegroundColor Green
+    }
+    catch {
+        Write-Host "❌ خطا در ایجاد پوشه Config: $_" -ForegroundColor Red
+        Read-Host "Press Enter to exit"
+        exit 1
+    }
+}
+
+foreach ($file in $configFiles) {
+    try {
+        $fileName = Split-Path $file -Leaf
+        Copy-Item -Path $file -Destination $configDirPath -Force
+        Write-Host "✅ $fileName کپی شد (Config)" -ForegroundColor Green
+    }
+    catch {
+        Write-Host "❌ خطا در کپی $fileName به مسیر Config: $_" -ForegroundColor Red
+        Read-Host "Press Enter to exit"
+        exit 1
+    }
+}
+Write-Host ""
 
 # Step 4: Success
 Write-Host ""
@@ -132,8 +166,9 @@ Write-Host "   • بازی را Restart کنید" -ForegroundColor White
 Write-Host "   • تنظیمات را در منوی بازی بررسی کنید" -ForegroundColor White
 Write-Host "   • از فایل README_PERSIAN.md راهنمایی بگیرید" -ForegroundColor White
 Write-Host ""
-Write-Host "📍 فایل‌ها در مسیر زیر کپی شدند:" -ForegroundColor Cyan
-Write-Host "   $targetPath" -ForegroundColor Gray
+Write-Host "📍 فایل‌ها در دو مسیر کپی شدند:" -ForegroundColor Cyan
+Write-Host "   1. $targetPath" -ForegroundColor Gray
+Write-Host "   2. $configDirPath" -ForegroundColor Gray
 Write-Host ""
 Write-Host "👨‍💻 ساخته شده توسط Nulltra Coder" -ForegroundColor Yellow
 Write-Host "📱 Telegram: @im_nulltra" -ForegroundColor Yellow
