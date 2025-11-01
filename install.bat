@@ -1,39 +1,36 @@
 @echo off
-chcp 65001 >nul
 cls
 color 0A
 
 echo.
-echo ╔═══════════════════════════════════════════════════════════════╗
-echo ║      🎮 نصب کننده کانفیگ کالاف دیوتی موبایل                 ║
-echo ║      Call of Duty Mobile Config Installer                     ║
-echo ║                                                               ║
-echo ║      Created by: Nulltra Coder                                ║
-echo ║      Telegram: @im_nulltra                                    ║
-echo ╚═══════════════════════════════════════════════════════════════╝
+echo ================================================================
+echo      Call of Duty Mobile Config Installer
+echo      Created by: Nulltra Coder
+echo      Telegram: @im_nulltra
+echo ================================================================
 echo.
 
-echo [1/4] بررسی فایل‌های کانفیگ...
+echo [1/4] Checking configuration files...
 if not exist "Config\graphics_settings.cfg" (
-    echo ❌ فایل graphics_settings.cfg پیدا نشد!
+    echo [ERROR] graphics_settings.cfg not found!
     pause
     exit /b 1
 )
 if not exist "Config\hyper_performance.cfg" (
-    echo ❌ فایل hyper_performance.cfg پیدا نشد!
+    echo [ERROR] hyper_performance.cfg not found!
     pause
     exit /b 1
 )
-echo ✅ همه فایل‌ها پیدا شدند
+echo [OK] All files found
 echo.
 
-echo [2/4] مسیر نصب را انتخاب کنید:
+echo [2/4] Select installation path:
 echo.
-echo    1) مسیر پیش‌فرض اندروید: Android\data\com.activision.callofduty.shooter\files\
-echo    2) مسیر دستی
-echo    3) خروج
+echo    1) Default Android path: Android\data\com.activision.callofduty.shooter\files\
+echo    2) Custom path
+echo    3) Exit
 echo.
-set /p choice="انتخاب کنید (1-3): "
+set /p choice="Choose (1-3): "
 
 if "%choice%"=="3" exit /b 0
 
@@ -43,84 +40,83 @@ if "%choice%"=="1" (
 )
 
 if "%choice%"=="2" (
-    set /p "TARGET_PATH=مسیر کامل را وارد کنید: "
+    set /p "TARGET_PATH=Enter full path: "
     goto :install
 )
 
-echo ❌ انتخاب نامعتبر!
+echo [ERROR] Invalid choice!
 pause
 exit /b 1
 
 :install
 echo.
-echo [3/4] در حال کپی فایل‌ها...
+echo [3/4] Copying files...
 echo.
-echo 📍 مسیر 1: Root Directory
+echo Location 1: Root Directory
 if not exist "%TARGET_PATH%" (
     mkdir "%TARGET_PATH%"
-    echo ✅ پوشه نصب ایجاد شد
+    echo [OK] Installation folder created
 )
 
-copy /Y "Config\graphics_settings.cfg" "%TARGET_PATH%\"
+copy /Y "Config\graphics_settings.cfg" "%TARGET_PATH\" >nul
 if errorlevel 1 (
-    echo ❌ خطا در کپی graphics_settings.cfg به مسیر اصلی
+    echo [ERROR] Failed to copy graphics_settings.cfg to root directory
     pause
     exit /b 1
 )
-echo ✅ graphics_settings.cfg کپی شد (Root)
+echo [OK] graphics_settings.cfg copied (Root)
 
-copy /Y "Config\hyper_performance.cfg" "%TARGET_PATH%\"
+copy /Y "Config\hyper_performance.cfg" "%TARGET_PATH\" >nul
 if errorlevel 1 (
-    echo ❌ خطا در کپی hyper_performance.cfg به مسیر اصلی
+    echo [ERROR] Failed to copy hyper_performance.cfg to root directory
     pause
     exit /b 1
 )
-echo ✅ hyper_performance.cfg کپی شد (Root)
+echo [OK] hyper_performance.cfg copied (Root)
 
 echo.
-echo 📍 مسیر 2: Config Directory
+echo Location 2: Config Directory
 set "CONFIG_PATH=%TARGET_PATH%\Config"
 if not exist "%CONFIG_PATH%" (
     mkdir "%CONFIG_PATH%"
-    echo ✅ پوشه Config ایجاد شد
+    echo [OK] Config folder created
 )
 
-copy /Y "Config\graphics_settings.cfg" "%CONFIG_PATH%\"
+copy /Y "Config\graphics_settings.cfg" "%CONFIG_PATH\" >nul
 if errorlevel 1 (
-    echo ❌ خطا در کپی graphics_settings.cfg به مسیر Config
+    echo [ERROR] Failed to copy graphics_settings.cfg to Config directory
     pause
     exit /b 1
 )
-echo ✅ graphics_settings.cfg کپی شد (Config)
+echo [OK] graphics_settings.cfg copied (Config)
 
-copy /Y "Config\hyper_performance.cfg" "%CONFIG_PATH%\"
+copy /Y "Config\hyper_performance.cfg" "%CONFIG_PATH\" >nul
 if errorlevel 1 (
-    echo ❌ خطا در کپی hyper_performance.cfg به مسیر Config
+    echo [ERROR] Failed to copy hyper_performance.cfg to Config directory
     pause
     exit /b 1
 )
-echo ✅ hyper_performance.cfg کپی شد (Config)
+echo [OK] hyper_performance.cfg copied (Config)
 echo.
 
-echo [4/4] نصب کامل شد!
+echo [4/4] Installation complete!
 echo.
-echo ╔═══════════════════════════════════════════════════════════════╗
-echo ║                    ✅ نصب موفقیت‌آمیز بود                     ║
-echo ╚═══════════════════════════════════════════════════════════════╝
+echo ================================================================
+echo                  Installation Successful
+echo ================================================================
 echo.
-echo 📝 نکات مهم:
-echo    • بازی را Restart کنید
-echo    • تنظیمات را در منوی بازی بررسی کنید
-echo    • از فایل README_PERSIAN.md راهنمایی بگیرید
+echo Important notes:
+echo    - Restart the game
+echo    - Check settings in game menu
+echo    - Read README_PERSIAN.md for details
 echo.
-echo 📍 فایل‌ها در دو مسیر کپی شدند:
+echo Files copied to two locations:
 echo    1. %TARGET_PATH%\
 echo    2. %TARGET_PATH%\Config\
 echo.
-echo 👨‍💻 ساخته شده توسط Nulltra Coder
-echo 📱 Telegram: @im_nulltra
+echo Created by: Nulltra Coder
+echo Telegram: @im_nulltra
 echo.
-echo لطفاً بازی را Restart کنید تا تغییرات اعمال شوند!
+echo Please restart the game to apply changes!
 echo.
 pause
-
