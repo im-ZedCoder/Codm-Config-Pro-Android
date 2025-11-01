@@ -54,6 +54,8 @@ exit /b 1
 :install
 echo.
 echo [3/4] در حال کپی فایل‌ها...
+echo.
+echo 📍 مسیر 1: Root Directory
 if not exist "%TARGET_PATH%" (
     mkdir "%TARGET_PATH%"
     echo ✅ پوشه نصب ایجاد شد
@@ -61,19 +63,43 @@ if not exist "%TARGET_PATH%" (
 
 copy /Y "Config\graphics_settings.cfg" "%TARGET_PATH%\"
 if errorlevel 1 (
-    echo ❌ خطا در کپی graphics_settings.cfg
+    echo ❌ خطا در کپی graphics_settings.cfg به مسیر اصلی
     pause
     exit /b 1
 )
-echo ✅ graphics_settings.cfg کپی شد
+echo ✅ graphics_settings.cfg کپی شد (Root)
 
 copy /Y "Config\hyper_performance.cfg" "%TARGET_PATH%\"
 if errorlevel 1 (
-    echo ❌ خطا در کپی hyper_performance.cfg
+    echo ❌ خطا در کپی hyper_performance.cfg به مسیر اصلی
     pause
     exit /b 1
 )
-echo ✅ hyper_performance.cfg کپی شد
+echo ✅ hyper_performance.cfg کپی شد (Root)
+
+echo.
+echo 📍 مسیر 2: Config Directory
+set "CONFIG_PATH=%TARGET_PATH%\Config"
+if not exist "%CONFIG_PATH%" (
+    mkdir "%CONFIG_PATH%"
+    echo ✅ پوشه Config ایجاد شد
+)
+
+copy /Y "Config\graphics_settings.cfg" "%CONFIG_PATH%\"
+if errorlevel 1 (
+    echo ❌ خطا در کپی graphics_settings.cfg به مسیر Config
+    pause
+    exit /b 1
+)
+echo ✅ graphics_settings.cfg کپی شد (Config)
+
+copy /Y "Config\hyper_performance.cfg" "%CONFIG_PATH%\"
+if errorlevel 1 (
+    echo ❌ خطا در کپی hyper_performance.cfg به مسیر Config
+    pause
+    exit /b 1
+)
+echo ✅ hyper_performance.cfg کپی شد (Config)
 echo.
 
 echo [4/4] نصب کامل شد!
@@ -86,6 +112,10 @@ echo 📝 نکات مهم:
 echo    • بازی را Restart کنید
 echo    • تنظیمات را در منوی بازی بررسی کنید
 echo    • از فایل README_PERSIAN.md راهنمایی بگیرید
+echo.
+echo 📍 فایل‌ها در دو مسیر کپی شدند:
+echo    1. %TARGET_PATH%\
+echo    2. %TARGET_PATH%\Config\
 echo.
 echo 👨‍💻 ساخته شده توسط Nulltra Coder
 echo 📱 Telegram: @im_nulltra
