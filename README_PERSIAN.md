@@ -76,20 +76,47 @@ Config/
    ```
 
 3. **فایل‌های کانفیگ را جایگذاری کنید**
-   - محتویات پوشه `Config` را در مسیر بالا کپی کنید
+   
+   **⚠️ مهم:** فایل‌ها باید در **دو مسیر** کپی شوند:
+   
+   **مسیر 1 - Root:**
+   ```
+   Android/data/com.activision.callofduty.shooter/files/
+   ```
+   
+   **مسیر 2 - Config Folder:**
+   ```
+   Android/data/com.activision.callofduty.shooter/files/Config/
+   ```
+   
+   - محتویات پوشه `Config` را در هر دو مسیر بالا کپی کنید
    
 4. **مجوزها را تنظیم کنید**
    - File Manager را مجاز کنید که فایل‌های سیستم را ویرایش کند
 
-### روش ۲: استفاده از ADB (برای کاربران پیشرفته)
+### روش ۲: استفاده از اسکریپت نصب (پیشنهادی)
+
+**برای نصب آسان و خودکار از اسکریپت‌های نصب استفاده کنید:**
+
+- **install.bat** - نصب‌کننده Windows (Batch)
+- **install.ps1** - نصب‌کننده PowerShell (پیشرفته)
+
+این اسکریپت‌ها به طور خودکار فایل‌ها را در هر دو مسیر کپی می‌کنند!
+
+### روش ۳: استفاده از ADB (برای کاربران پیشرفته)
 
 ```bash
 # اتصال دستگاه اندروید به کامپیوتر
 adb connect [YOUR_DEVICE_IP]
 
-# کپی کردن فایل‌های کانفیگ
+# کپی کردن فایل‌های کانفیگ - مسیر Root
 adb push Config/graphics_settings.cfg /storage/emulated/0/Android/data/com.activision.callofduty.shooter/files/
 adb push Config/hyper_performance.cfg /storage/emulated/0/Android/data/com.activision.callofduty.shooter/files/
+
+# کپی کردن فایل‌های کانفیگ - مسیر Config
+adb shell mkdir -p /storage/emulated/0/Android/data/com.activision.callofduty.shooter/files/Config
+adb push Config/graphics_settings.cfg /storage/emulated/0/Android/data/com.activision.callofduty.shooter/files/Config/
+adb push Config/hyper_performance.cfg /storage/emulated/0/Android/data/com.activision.callofduty.shooter/files/Config/
 ```
 
 ---
